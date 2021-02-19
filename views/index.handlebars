@@ -6,9 +6,9 @@
                 
             </h1>
             <p class="lead">Donate For a Good Cause</p>
-            <form action="/charge" method="POST">
+            <form action='charge' method="POST">
             <script
-                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
                 data-key="{{stripePublishableKey}}"
                 data-amount="500"
                 data-name="Donation App"
@@ -21,8 +21,9 @@
                 // Hide default stripe button
                 document.getElementsByClassName('stripe-button-el')[0].style.display = 'none';
             </script>
+            <script src="https://js.stripe.com/v3"></script>
             <!--Add our own button-->
-            <button type="submit" class="btn btn-outline-dark text-white btn-lg">Donate $5</button>
+            <button type="submit" class="btn btn-outline-dark text-white btn-lg" id="checkout-button">Donate $5</button>
             </form>
         </div>
         <div class="col-md-6">
