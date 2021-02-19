@@ -24,6 +24,10 @@ app.get('/', (req, res) => {
   });
 });
 
+//About Us
+app.get('/about', (req, res) => {
+  res.render('about');
+});
 // Charge Route
 app.post('/charge', (req, res) => {
   const amount = 2500;
@@ -34,7 +38,7 @@ app.post('/charge', (req, res) => {
   })
   .then(customer => stripe.charges.create({
     amount,
-    description: 'Web Development Ebook',
+    description: 'Tree Plantation',
     currency: 'inr',
     customer: customer.id
   }))
