@@ -4,7 +4,6 @@ const stripe = require('stripe')(keys.stripeSecretKey);
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 
-
 const app = express();
 
 // Handlebars Middleware
@@ -28,35 +27,22 @@ app.get('/', (req, res) => {
 // Charge Route
 app.post('/charge', (req, res) => {
   const amount = 2500;
-  console.log(req.body);
-
-  return stripe.customers.create({
+  
+  stripe.customers.create({
     email: req.body.stripeEmail,
     source: req.body.stripeToken
-    
   })
+  .then(customer => stripe.charges.create({
+    amount,
+    description: 'Web Development Ebook',
+    currency: 'inr',
+    customer: customer.id
+  }))
+  .then(charge => res.render('success'))
   .catch((error) => {
-    console.log('Promise errorB');
-  })
-  .then((customer) => {
-    console.log(customer);
-    stripe.charges.create({
-      amount:2500,
-      description: 'Web Development Ebook',
-      currency: 'USD',
-      customer: '1'
-    }
-      
-    );
-    console.log('here');
-  })
-  .then((charge) => {
-    console.log('Promise errorB');
-    res.render('success');
-  })
-  .catch((error) => {
-    console.log('Promise error');
-  });
+    console.log(error);
+  });;
+  
 });
 
 const port = process.env.PORT || 5000;
